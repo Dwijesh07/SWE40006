@@ -1,0 +1,2 @@
+C:\Users\Dwijesh\Documents\Sem2- 2025\Soft Deployment and Evolution\task1\WindowsFormsApp1\SetupProject1\bin\Debug\SetupProject1.msi
+C:\Users\Dwijesh\Documents\Sem2- 2025\Soft Deployment and Evolution\task1\WindowsFormsApp1\SetupProject1\bin\Debug\SetupProject1.wixpdb
