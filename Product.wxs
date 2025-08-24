@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*"
+			 Name="WindowsFormsApp1"
+			 Language="1033"
+			 Version="1.0.0.0"
+			 Manufacturer="Isar Ujoodah"
+			 UpgradeCode="c0e44b75-f380-4637-836a-58a244935506">
+
+		<Package InstallerVersion="500" Compressed="yes" InstallScope="perMachine" />
+		<MediaTemplate EmbedCab="yes" />
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+
+		<!-- Enable standard wizard and choose install folder -->
+		<Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+		<UIRef Id="WixUI_InstallDir" />
+		<WixVariable Id="WixUILicenseRtf" Value="license.rtf" />
+
+		<Feature Id="ProductFeature" Title="WindowsFormsApp1" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+			<ComponentRef Id="StartMenuShortcuts" />
+		</Feature>
+	</Product>
+
+	<!-- Install locations -->
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="WindowsFormsApp1" />
+			</Directory>
+			<Directory Id="ProgramMenuFolder">
+				<Directory Id="AppProgramMenuDir" Name="WindowsFormsApp1" />
+			</Directory>
+		</Directory>
+	</Fragment>
+
+	<!-- Files + shortcut -->
+	<Fragment>
+		<ComponentGroup Id="ProductComponents">
+			<Component Id="AppExeComp" Guid="B8A6CFEE-7A69-4718-976A-379EE68EAA09" Directory="INSTALLFOLDER">
+				<File Id="AppExe"
+					  Name="WindowsFormsApp1.exe"
+					  Source="$(var.WindowsFormsApp1.TargetDir)WindowsFormsApp1.exe" />
+			</Component>
+
+			<!-- (Optional) Add DLLs here: copy block, change Name/Source, NEW Guid each time
+      <Component Id="MyLib1Comp" Guid="PUT-NEW-GUID-1" Directory="INSTALLFOLDER">
+        <File Id="MyLib1" Name="MyLib1.dll"
+              Source="$(var.WindowsFormsApp1.TargetDir)MyLib1.dll" />
+      </Component>
+      -->
+		</ComponentGroup>
+
+		<Component Id="StartMenuShortcuts" Guid="AF8BFCC2-DB10-4F31-9D2A-7E4C494E04E8" Directory="AppProgramMenuDir">
+			<Shortcut Id="AppShortcut"
+					  Name="WindowsFormsApp1"
+					  Target="[INSTALLFOLDER]WindowsFormsApp1.exe"
+					  WorkingDirectory="INSTALLFOLDER" />
+			<RemoveFolder Id="RemoveAppProgramMenuDir" On="uninstall" />
+			<RegistryValue Root="HKCU" Key="Software\WindowsFormsApp1" Name="installed"
+						   Type="integer" Value="1" KeyPath="yes" />
+		</Component>
+	</Fragment>
+</Wix>
